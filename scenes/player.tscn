@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://deo1jkqhex7wj"]
+
+[ext_resource type="Script" path="res://scripts/PlayerMovement.cs" id="1_jba2s"]
+[ext_resource type="Texture2D" uid="uid://dpehi0wj6cga6" path="res://kenney/Tiles/tile_0097.png" id="2_fts78"]
+[ext_resource type="Script" path="res://scripts/PlayerSprite.cs" id="3_4vep5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m8r73"]
+radius = 6.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_jba2s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_fts78")
+script = ExtResource("3_4vep5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_m8r73")
