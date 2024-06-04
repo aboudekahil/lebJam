@@ -1,15 +1,25 @@
 using Godot;
-using System;
+
+namespace LebJam.scenes;
 
 public partial class PlayerAnimation : AnimationPlayer
 {
-	// Called when the node enters the scene tree for the first time.
+	private CharacterBody2D _body2D; 
+	
 	public override void _Ready()
 	{
+		_body2D = GetParent() as CharacterBody2D;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (_body2D.Velocity != Vector2.Zero)
+		{
+			Play("walk");
+		} else
+		{
+			Pause();
+		}
 	}
+
 }

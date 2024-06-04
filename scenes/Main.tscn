@@ -155,7 +155,7 @@ layer_0/tile_data = PackedInt32Array(-131074, 65536, 4, -65538, 0, 4, -131073, 0
 [node name="Player" parent="." instance=ExtResource("1_07on8")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(4, 4)
+zoom = Vector2(3.8, 3.8)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true

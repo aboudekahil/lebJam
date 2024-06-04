@@ -1,4 +1,4 @@
-namespace LebJam;
+namespace LebJam.scripts;
 
 public partial class Camera2D : Godot.Camera2D
 {

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace LebJam;
+namespace LebJam.scripts;
 
 public partial class PlayerMovement : CharacterBody2D
 {
@@ -17,6 +17,12 @@ public partial class PlayerMovement : CharacterBody2D
     }
 
     public override void _PhysicsProcess(double delta)
+    {
+        MovePlayer(delta);
+        RotateTowardsMouse(delta);
+    }
+
+    private void MovePlayer(double delta)
     {
         var isRunning = Input.IsActionPressed("running");
         var speed = NormalSpeed + (isRunning ? RunningSpeedBoost : 0.0f);
@@ -37,5 +43,28 @@ public partial class PlayerMovement : CharacterBody2D
 
         Velocity = velocity;
         MoveAndSlide();
+    }
+
+    private void RotateTowardsMouse(double delta)
+    {
+        var mousePosition = GetGlobalMousePosition();
+        var position = GlobalPosition;
+
+        float newRotation;
+        
+        if (position.X < mousePosition.X)
+        {
+            newRotation = -Mathf.Atan2(position.X - mousePosition.X,
+                position.Y - mousePosition.Y) - Mathf.Pi / 2;
+        }
+        else
+        {
+            newRotation = -Mathf.Atan2(mousePosition.X - position.X,
+                mousePosition.Y - position.Y) - Mathf.Pi / 2;
+        }
+
+        newRotation = (float) Mathf.Clamp(newRotation, -0.55, 0.55);
+
+        Rotation = Mathf.RotateToward(Rotation, newRotation, (float) delta * 10);
     }
 }

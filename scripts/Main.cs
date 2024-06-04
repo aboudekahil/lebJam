@@ -1,6 +1,6 @@
 using Godot;
 
-namespace LebJam;
+namespace LebJam.scripts;
 
 public partial class Main : Node2D
 {
