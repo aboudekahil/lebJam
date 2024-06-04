@@ -4,7 +4,7 @@ namespace LebJam.scripts;
 
 public partial class PlayerMovement : CharacterBody2D
 {
-    [Export] private const float NormalSpeed = 85.0f;
+    private const float NormalSpeed = 85.0f;
 
     private const float RunningSpeedBoost = 100.0f;
     private float _baseRotation;
@@ -37,12 +37,13 @@ public partial class PlayerMovement : CharacterBody2D
         } else
         {
             velocity = velocity.MoveToward(Vector2.Zero,
-                (float)delta * speed * 12.5f);
+                (float)delta * speed * 11f);
         }
 
 
         Velocity = velocity;
         MoveAndSlide();
+        
     }
 
     private void RotateTowardsMouse(double delta)

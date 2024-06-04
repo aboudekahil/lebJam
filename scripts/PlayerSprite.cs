@@ -1,6 +1,6 @@
 using Godot;
 
-namespace LebJam;
+namespace LebJam.scripts;
 
 public partial class PlayerSprite : Sprite2D
 {
@@ -17,7 +17,7 @@ public partial class PlayerSprite : Sprite2D
         var position = GlobalPosition;
         var mousePosition = GetGlobalMousePosition();
         var scale = Scale;
-
+        
         if (position.X > mousePosition.X)
         {
             scale.X = -1;
@@ -25,7 +25,7 @@ public partial class PlayerSprite : Sprite2D
         {
             scale.X = 1;
         }
-
+        
         Scale = scale;
     }
 }
