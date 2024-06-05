@@ -9,6 +9,7 @@ public partial class Main : Node2D
 		if (@event.IsActionPressed("ui_cancel"))
 		{
 			GetTree().Quit();
+			
 		}
 	}
 }
