@@ -16,16 +16,7 @@ public partial class PlayerSprite : Sprite2D
     {
         var position = GlobalPosition;
         var mousePosition = GetGlobalMousePosition();
-        var scale = Scale;
         
-        if (position.X > mousePosition.X)
-        {
-            scale.X = -1;
-        } else
-        {
-            scale.X = 1;
-        }
-        
-        Scale = scale;
+        FlipH = position.X > mousePosition.X;
     }
 }

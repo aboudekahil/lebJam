@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp1upi3ibq8lf"]
+[gd_scene load_steps=9 format=3 uid="uid://bp1upi3ibq8lf"]
 
-[ext_resource type="PackedScene" uid="uid://deo1jkqhex7wj" path="res://scenes/player.tscn" id="1_07on8"]
+[ext_resource type="PackedScene" uid="uid://deo1jkqhex7wj" path="res://scenes/Player.tscn" id="1_07on8"]
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_rrfub"]
 [ext_resource type="Texture2D" uid="uid://d2tnvgsla3ffm" path="res://kenney/Tilemap/tilemap_packed.png" id="2_scprj"]
-[ext_resource type="Script" path="res://scripts/Camera2D.cs" id="4_lpnxi"]
+[ext_resource type="PackedScene" uid="uid://mlcx0ihrtkxw" path="res://scenes/Pickable.tscn" id="4_4vanc"]
+[ext_resource type="Resource" uid="uid://cg2x656mfabmd" path="res://resources/SwordResource.tres" id="5_ih2il"]
+[ext_resource type="Resource" uid="uid://b1ijjqgruraxi" path="res://resources/AxePickableResource.tres" id="6_t7gd7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hrhvo"]
 texture = ExtResource("2_scprj")
@@ -144,7 +146,6 @@ texture = ExtResource("2_scprj")
 sources/0 = SubResource("TileSetAtlasSource_hrhvo")
 
 [node name="Main" type="Node2D"]
-position = Vector2(0, -1)
 script = ExtResource("1_rrfub")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -157,7 +158,19 @@ position = Vector2(30, 0)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(3.8, 3.8)
+limit_left = -208
+limit_top = -144
+limit_right = 235
+limit_bottom = 158
+limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-script = ExtResource("4_lpnxi")
+
+[node name="Pickable" parent="." instance=ExtResource("4_4vanc")]
+position = Vector2(-57, 3)
+_pickableResource = ExtResource("5_ih2il")
+
+[node name="Pickable2" parent="." instance=ExtResource("4_4vanc")]
+position = Vector2(129, 3)
+_pickableResource = ExtResource("6_t7gd7")

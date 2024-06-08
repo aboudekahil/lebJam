@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PickableResource" load_steps=3 format=3 uid="uid://b1ijjqgruraxi"]
+
+[ext_resource type="PackedScene" uid="uid://qmkj3max6flp" path="res://scenes/Axe.tscn" id="1_rug7o"]
+[ext_resource type="Script" path="res://scripts/PickableResource.cs" id="1_u666s"]
+
+[resource]
+script = ExtResource("1_u666s")
+PickableType = 0
+Pickable = ExtResource("1_rug7o")

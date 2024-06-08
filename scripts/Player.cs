@@ -1,8 +1,9 @@
+using System;
 using Godot;
 
 namespace LebJam.scripts;
 
-public partial class PlayerMovement : CharacterBody2D
+public partial class Player : CharacterBody2D
 {
 	private const float NormalSpeed = 85.0f;
 
@@ -10,8 +11,12 @@ public partial class PlayerMovement : CharacterBody2D
 	private float _baseRotation;
 	private float _rotation;
 
+	private WeaponManager _weaponManager;
+	
 	public override void _Ready()
 	{
+		_weaponManager = GetNode<WeaponManager>("WeaponManager");
+		
 		_baseRotation = RotationDegrees;
 		_rotation = _baseRotation;
 	}
@@ -67,5 +72,16 @@ public partial class PlayerMovement : CharacterBody2D
 		newRotation = (float) Mathf.Clamp(newRotation, -0.55, 0.55);
 
 		Rotation = Mathf.RotateToward(Rotation, newRotation, (float) delta * 10);
+	}
+	
+	public void AddWeapon(PackedScene pickableWeapon)
+	{
+		var newChildWeapon = pickableWeapon.Instantiate();
+
+		if (newChildWeapon is not Weapon weapon)
+		{
+			throw new ArgumentException("Scene passed is not weapon");
+		}
+		_weaponManager.AddWeapon(weapon);
 	}
 }

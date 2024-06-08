@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://deo1jkqhex7wj"]
+[gd_scene load_steps=11 format=3 uid="uid://deo1jkqhex7wj"]
 
-[ext_resource type="Script" path="res://scripts/PlayerMovement.cs" id="1_jba2s"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="1_icky7"]
 [ext_resource type="Texture2D" uid="uid://dpehi0wj6cga6" path="res://kenney/Tiles/tile_0097.png" id="2_fts78"]
-[ext_resource type="Script" path="res://scenes/PlayerAnimation.cs" id="2_xca0s"]
+[ext_resource type="Script" path="res://scripts/PlayerAnimation.cs" id="2_xca0s"]
 [ext_resource type="Script" path="res://scripts/PlayerSprite.cs" id="3_4vep5"]
+[ext_resource type="Script" path="res://scripts/WeaponManager.cs" id="3_vcooq"]
 
 [sub_resource type="Animation" id="Animation_5ap0n"]
 resource_name = "idle"
@@ -44,13 +45,16 @@ _data = {
 "walk": SubResource("Animation_im3us")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_706am"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_m8r73"]
 radius = 5.0
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_jba2s")
+script = ExtResource("1_icky7")
 metadata/_edit_vertical_guides_ = [8.0, -8.0]
 metadata/_edit_horizontal_guides_ = [-7.0, 8.0]
+metadata/_edit_group_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -62,6 +66,17 @@ script = ExtResource("2_xca0s")
 texture = ExtResource("2_fts78")
 script = ExtResource("3_4vep5")
 
+[node name="PlayerArea2D" type="Area2D" parent="." groups=["Player"]]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea2D"]
+shape = SubResource("CircleShape2D_706am")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("CircleShape2D_m8r73")
+
+[node name="WeaponManager" type="Node2D" parent="."]
+position = Vector2(6, 5)
+rotation = 1.5708
+script = ExtResource("3_vcooq")
