@@ -16,7 +16,8 @@ public partial class PlayerSprite : Sprite2D
     {
         var position = GlobalPosition;
         var mousePosition = GetGlobalMousePosition();
-        
-        FlipH = position.X > mousePosition.X;
+        var isFarEnough = Mathf.Abs(position.X - mousePosition.X) > 15;
+
+        FlipH = position.X > mousePosition.X && isFarEnough;
     }
 }

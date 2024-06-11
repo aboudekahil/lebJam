@@ -4,11 +4,8 @@ namespace LebJam.scripts;
 
 public partial class Sword : Weapon
 {
-	public override void _Ready()
+	public override void Use()
 	{
-	}
-
-	public override void _Process(double delta)
-	{
+		GD.Print("I AM USING A SWORD");
 	}
 }

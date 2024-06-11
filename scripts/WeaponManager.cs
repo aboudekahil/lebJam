@@ -7,6 +7,14 @@ public partial class WeaponManager : Weapon
 {
     private readonly List<Weapon> _weapons = new();
     private int _primaryWeapon = -1;
+    private Marker2D _leftHand;
+    private Marker2D _rightHand;
+
+    public override void _Ready()
+    {
+        _leftHand = GetNode<Marker2D>("%LeftHand");
+        _rightHand = GetNode<Marker2D>("%RightHand");
+    }
 
     public void AddWeapon(Weapon weapon)
     {
@@ -30,10 +38,28 @@ public partial class WeaponManager : Weapon
         {
             ToggleWeapon();
         }
+
+        if (@event.IsActionPressed("use_item") && _weapons.Count > 0)
+        {
+            _weapons[_primaryWeapon].Use();
+        }
     }
 
     public override void _Process(double delta)
     {
-        base._Process(delta);
+        var position = GlobalPosition;
+        var mousePosition = GetGlobalMousePosition();
+        var isFarEnough = Mathf.Abs(position.X - mousePosition.X) > 15;
+        
+        if (position.X > mousePosition.X && isFarEnough)
+        {
+            Position = _leftHand.Position;
+            Rotation = _leftHand.Rotation;
+        }else if (position.X < mousePosition.X && isFarEnough)
+        {
+            Position = _rightHand.Position;
+            Rotation = _rightHand.Rotation;
+        }
     }
+    
 }

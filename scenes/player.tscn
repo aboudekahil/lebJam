@@ -80,3 +80,13 @@ shape = SubResource("CircleShape2D_m8r73")
 position = Vector2(6, 5)
 rotation = 1.5708
 script = ExtResource("3_vcooq")
+
+[node name="RightHand" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(9, 5)
+rotation = 1.5708
+
+[node name="LeftHand" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-9, 5)
+rotation = -1.5708
