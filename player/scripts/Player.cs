@@ -6,18 +6,21 @@ namespace LebJam.player.scripts;
 
 public partial class Player : CharacterBody2D
 {
+    [Export] private float _teleportRange = 1000.0f;
+    
     private const float NormalSpeed = 85.0f;
     private const float RunningSpeedBoost = 100.0f;
     private float _baseRotation;
     private float _rotation;
-    [Export] private float _teleportRange = 1000.0f;
-
+    
     private WeaponManager _weaponManager;
-
+    private Timer _teleportationTimer;
+    
     public override void _Ready()
     {
         _weaponManager = GetNode<WeaponManager>("WeaponManager");
-
+        _teleportationTimer = GetNode<Timer>("%TeleportationTimer");
+        
         _baseRotation = RotationDegrees;
         _rotation = _baseRotation;
     }
@@ -30,7 +33,7 @@ public partial class Player : CharacterBody2D
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("teleport"))
+        if (@event.IsActionReleased("teleport"))
         {
             TeleportSpecial();
         }
@@ -95,9 +98,13 @@ public partial class Player : CharacterBody2D
 
     private void TeleportSpecial()
     {
+        if (_teleportationTimer.TimeLeft > 0) return;
+        
         var mousePosition = GetGlobalMousePosition();
 
         GlobalPosition =
             mousePosition;
+        
+        _teleportationTimer.Start();
     }
 }
