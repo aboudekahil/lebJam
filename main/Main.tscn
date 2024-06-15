@@ -3,8 +3,7 @@
 [ext_resource type="Script" path="res://main/Main.cs" id="1_lqeai"]
 [ext_resource type="Texture2D" uid="uid://d2tnvgsla3ffm" path="res://kenney/Tilemap/tilemap_packed.png" id="2_y8an4"]
 [ext_resource type="PackedScene" uid="uid://deo1jkqhex7wj" path="res://player/scenes/Player.tscn" id="3_430ye"]
-[ext_resource type="PackedScene" uid="uid://qmkj3max6flp" path="res://weapons/Axe.tscn" id="5_bndux"]
-[ext_resource type="PackedScene" uid="uid://skodsw152gpx" path="res://interactables/weapon pickup/scenes/WeaponPickup.tscn" id="6_h0rxh"]
+[ext_resource type="Texture2D" uid="uid://d1i1fmqtar8bg" path="res://kenney/Tilemap/tilemap.png" id="3_qgqub"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hrhvo"]
 texture = ExtResource("2_y8an4")
@@ -141,8 +140,12 @@ texture = ExtResource("2_y8an4")
 10:10/0 = 0
 11:10/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xcgxj"]
+texture = ExtResource("3_qgqub")
+
 [sub_resource type="TileSet" id="TileSet_m5cm2"]
 sources/0 = SubResource("TileSetAtlasSource_hrhvo")
+sources/1 = SubResource("TileSetAtlasSource_xcgxj")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lqeai")
@@ -165,7 +168,3 @@ limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-
-[node name="WeaponPickup" parent="." instance=ExtResource("6_h0rxh")]
-position = Vector2(-73, 0)
-_weapon = ExtResource("5_bndux")
