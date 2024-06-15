@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://skodsw152gpx"]
+
+[ext_resource type="Script" path="res://interactables/weapon pickup/scripts/WeaponPickup.cs" id="1_c5nex"]
+[ext_resource type="Script" path="res://interactables/interaction area/scripts/InteractionArea.cs" id="1_p8f7s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w6nc6"]
+radius = 20.0
+
+[node name="WeaponPickup" type="Node2D"]
+script = ExtResource("1_c5nex")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_p8f7s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_w6nc6")
+
+[node name="WeaponSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true

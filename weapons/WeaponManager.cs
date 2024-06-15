@@ -6,8 +6,8 @@ namespace LebJam.scripts;
 public partial class WeaponManager : Weapon
 {
     private readonly List<Weapon> _weapons = new();
-    private int _primaryWeapon = -1;
     private Marker2D _leftHand;
+    private int _primaryWeapon = -1;
     private Marker2D _rightHand;
 
     public override void _Ready()
@@ -29,6 +29,7 @@ public partial class WeaponManager : Weapon
         {
             RemoveChild(child);
         }
+
         CallDeferred(Node.MethodName.AddChild, _weapons[_primaryWeapon]);
     }
 
@@ -50,16 +51,15 @@ public partial class WeaponManager : Weapon
         var position = GlobalPosition;
         var mousePosition = GetGlobalMousePosition();
         var isFarEnough = Mathf.Abs(position.X - mousePosition.X) > 15;
-        
+
         if (position.X > mousePosition.X && isFarEnough)
         {
             Position = _leftHand.Position;
             Rotation = _leftHand.Rotation;
-        }else if (position.X < mousePosition.X && isFarEnough)
+        } else if (position.X < mousePosition.X && isFarEnough)
         {
             Position = _rightHand.Position;
             Rotation = _rightHand.Rotation;
         }
     }
-    
 }

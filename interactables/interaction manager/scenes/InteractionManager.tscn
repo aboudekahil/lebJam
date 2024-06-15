@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://lt5fgfrdvlqo"]
+
+[ext_resource type="Script" path="res://interactables/interaction manager/scripts/InteractionManager.cs" id="1_f1brq"]
+[ext_resource type="FontFile" uid="uid://cfbumo3ipceev" path="res://Born2bSportyV2.ttf" id="2_3fmsh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ekoqt"]
+font = ExtResource("2_3fmsh")
+font_size = 12
+
+[node name="InteractionManager" type="Node2D"]
+script = ExtResource("1_f1brq")
+
+[node name="InteractionLabel" type="Label" parent="."]
+unique_name_in_owner = true
+z_index = 20
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.5
+offset_right = 75.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "[E] to interact"
+label_settings = SubResource("LabelSettings_ekoqt")
+horizontal_alignment = 1
+vertical_alignment = 1

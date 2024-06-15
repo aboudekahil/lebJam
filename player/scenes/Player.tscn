@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://deo1jkqhex7wj"]
 
-[ext_resource type="Script" path="res://scripts/Player.cs" id="1_icky7"]
+[ext_resource type="Script" path="res://player/scripts/Player.cs" id="1_icky7"]
 [ext_resource type="Texture2D" uid="uid://dpehi0wj6cga6" path="res://kenney/Tiles/tile_0097.png" id="2_fts78"]
-[ext_resource type="Script" path="res://scripts/PlayerAnimation.cs" id="2_xca0s"]
-[ext_resource type="Script" path="res://scripts/PlayerSprite.cs" id="3_4vep5"]
-[ext_resource type="Script" path="res://scripts/WeaponManager.cs" id="3_vcooq"]
+[ext_resource type="Script" path="res://player/scripts/PlayerAnimation.cs" id="2_xca0s"]
+[ext_resource type="Script" path="res://player/scripts/PlayerSprite.cs" id="3_4vep5"]
+[ext_resource type="Script" path="res://weapons/WeaponManager.cs" id="3_vcooq"]
 
 [sub_resource type="Animation" id="Animation_5ap0n"]
 resource_name = "idle"
@@ -50,7 +50,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_m8r73"]
 radius = 5.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_icky7")
 metadata/_edit_vertical_guides_ = [8.0, -8.0]
 metadata/_edit_horizontal_guides_ = [-7.0, 8.0]
@@ -84,9 +84,9 @@ script = ExtResource("3_vcooq")
 [node name="RightHand" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(9, 5)
-rotation = 1.5708
 
 [node name="LeftHand" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-9, 5)
-rotation = -1.5708
+
+[node name="TeleportationTimer" type="Timer" parent="."]
