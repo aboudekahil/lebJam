@@ -6,12 +6,13 @@ namespace LebJam.player.scripts;
 
 public partial class Player : CharacterBody2D
 {
-    [Export] private float _teleportRange = 1000.0f;
+    [Export] private float _teleportRange = 40.0f;
     
     private const float NormalSpeed = 85.0f;
     private const float RunningSpeedBoost = 100.0f;
     private float _baseRotation;
     private float _rotation;
+    private bool _isHoldingTeleport;
     
     private WeaponManager _weaponManager;
     private Timer _teleportationTimer;
@@ -33,10 +34,43 @@ public partial class Player : CharacterBody2D
 
     public override void _Input(InputEvent @event)
     {
+        if (@event.IsActionPressed("teleport"))
+        {
+            _isHoldingTeleport = true;
+            QueueRedraw();
+        }
+        
         if (@event.IsActionReleased("teleport"))
         {
             TeleportSpecial();
+            _isHoldingTeleport = false;
+            QueueRedraw();
         }
+
+        if (@event is InputEventMouseMotion && _isHoldingTeleport)
+        {
+            QueueRedraw();
+        }
+    }
+
+    public override void _Draw()
+    {
+        if (!_isHoldingTeleport)
+        {
+            return;
+        }
+
+        var mousePosition = GetGlobalMousePosition();
+        
+        var teleportVector = mousePosition - GlobalPosition;
+        if (teleportVector.Length() > _teleportRange || _teleportationTimer.TimeLeft > 0)
+        {
+            DrawCircle(Transform.Y, _teleportRange, Color.Color8(255, 0, 0, 128));
+            return;
+        }
+        
+        DrawCircle(Transform.Y, _teleportRange, Color.Color8(0, 255, 0, 128));
+        
     }
 
     private void MovePlayer(double delta)
@@ -101,9 +135,16 @@ public partial class Player : CharacterBody2D
         if (_teleportationTimer.TimeLeft > 0) return;
         
         var mousePosition = GetGlobalMousePosition();
-
-        GlobalPosition =
-            mousePosition;
+        
+        var teleportVector = mousePosition - GlobalPosition;
+        
+        if (teleportVector.Length() > _teleportRange)
+        {
+            // teleportVector = teleportVector.Normalized() * _teleportRange;
+            return;
+        }
+        
+        GlobalPosition += teleportVector;
         
         _teleportationTimer.Start();
     }

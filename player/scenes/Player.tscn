@@ -1,26 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://deo1jkqhex7wj"]
+[gd_scene load_steps=11 format=3 uid="uid://deo1jkqhex7wj"]
 
 [ext_resource type="Script" path="res://player/scripts/Player.cs" id="1_icky7"]
 [ext_resource type="Texture2D" uid="uid://dpehi0wj6cga6" path="res://kenney/Tiles/tile_0097.png" id="2_fts78"]
 [ext_resource type="Script" path="res://player/scripts/PlayerAnimation.cs" id="2_xca0s"]
 [ext_resource type="Script" path="res://player/scripts/PlayerSprite.cs" id="3_4vep5"]
 [ext_resource type="Script" path="res://weapons/WeaponManager.cs" id="3_vcooq"]
-[ext_resource type="Shader" path="res://player/AreaOfTeleportation.gdshader" id="6_tdrq1"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyi3d"]
-shader = ExtResource("6_tdrq1")
-shader_parameter/radius = 0.5
-shader_parameter/inColor = Color(0.2, 0.5, 0.1, 1)
-shader_parameter/inColor2 = Color(0.2, 0.5, 0.1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2obv4"]
-shader = ExtResource("6_tdrq1")
-shader_parameter/radius = 0.5
-shader_parameter/inColor = Color(0.993823, 0.633759, 0.295789, 1)
-shader_parameter/inColor2 = Color(0.2, 0.5, 0.1, 1)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_btnfq"]
-size = Vector2(4, 4)
 
 [sub_resource type="Animation" id="Animation_5ap0n"]
 resource_name = "idle"
@@ -67,16 +51,9 @@ _data = {
 radius = 5.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-material = SubResource("ShaderMaterial_fyi3d")
 script = ExtResource("1_icky7")
 metadata/_edit_vertical_guides_ = [8.0, -8.0]
 metadata/_edit_horizontal_guides_ = [-7.0, 8.0]
-
-[node name="AreaOfTeleportation" type="Sprite2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_2obv4")
-scale = Vector2(20, 20)
-texture = SubResource("PlaceholderTexture2D_btnfq")
 
 [node name="TeleportationTimer" type="Timer" parent="."]
 unique_name_in_owner = true
