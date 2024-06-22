@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://h03ffdh8xxwx"]
+
+[ext_resource type="Texture2D" uid="uid://cq0age0rq53b7" path="res://kenney/Tiles/tile_0109.png" id="1_r32xq"]
+[ext_resource type="Script" path="res://player/scenes/PlayerDetection.cs" id="2_o53l1"]
+[ext_resource type="Script" path="res://FSM/scripts/FSM.cs" id="3_233dl"]
+[ext_resource type="Script" path="res://Enemies/scenes/EnemyIdle.cs" id="4_e0m4n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4g5ma"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kemn6"]
+radius = 83.006
+
+[node name="Enemy" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r32xq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4g5ma")
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+script = ExtResource("2_o53l1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+shape = SubResource("CircleShape2D_kemn6")
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("_defaultState")]
+script = ExtResource("3_233dl")
+_defaultState = NodePath("Idle")
+
+[node name="Idle" type="Node2D" parent="FSM" node_paths=PackedStringArray("_nav", "_enemy")]
+script = ExtResource("4_e0m4n")
+_nav = NodePath("../../NavigationAgent2D")
+_enemy = NodePath("../..")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.694734, 0.000388415, 0.700191, 1)
+debug_path_custom_line_width = 0.65

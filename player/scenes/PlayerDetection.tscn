@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq1g2f4kfxuxu"]
+
+[ext_resource type="Script" path="res://player/scenes/PlayerDetection.cs" id="1_f02pw"]
+
+[node name="PlayerDetection" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_f02pw")
