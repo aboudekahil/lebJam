@@ -99,6 +99,7 @@ teleport={
 
 [layer_names]
 
+2d_render/layer_1="buil"
 2d_physics/layer_1="world"
 2d_physics/layer_2="player"
 
