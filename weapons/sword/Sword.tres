@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://cj70xykp6867x"]
 
-[ext_resource type="PackedScene" uid="uid://ciqts4kgdufq1" path="res://weapons/Sword.tscn" id="1_dxvfn"]
+[ext_resource type="PackedScene" uid="uid://ciqts4kgdufq1" path="res://weapons/sword/Sword.tscn" id="1_dxvfn"]
 [ext_resource type="Script" path="res://weapons/WeaponResource.cs" id="1_exrmi"]
 
 [resource]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ciqts4kgdufq1"]
 
-[ext_resource type="Script" path="res://weapons/Sword.cs" id="1_jern4"]
+[ext_resource type="Script" path="res://weapons/sword/Sword.cs" id="1_jern4"]
 [ext_resource type="Texture2D" uid="uid://4gunfuy604w2" path="res://kenney/Tiles/tile_0106.png" id="2_0416j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ovvf0"]
@@ -18,3 +18,5 @@ offset = Vector2(0, -6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ovvf0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

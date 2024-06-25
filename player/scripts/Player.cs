@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using LebJam.scripts;
+using WeaponManager = LebJam.weapons.WeaponManager;
 
 namespace LebJam.player.scripts;
 

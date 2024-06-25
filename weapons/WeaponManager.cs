@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+using Godot.Collections;
+using LebJam.scripts;
 
-namespace LebJam.scripts;
+namespace LebJam.weapons;
 
 public partial class WeaponManager : Weapon
 {
+    [Export] private Array<PackedScene> _defaultWeapons = new();
     private readonly List<Weapon> _weapons = new();
     private Marker2D _leftHand;
     private int _primaryWeapon = -1;
@@ -14,6 +18,17 @@ public partial class WeaponManager : Weapon
     {
         _leftHand = GetNode<Marker2D>("%LeftHand");
         _rightHand = GetNode<Marker2D>("%RightHand");
+
+
+        if (_defaultWeapons.Count <= 0)
+        {
+            return;
+        }
+
+        _weapons.AddRange(_defaultWeapons.Select(scenes =>
+            scenes.Instantiate<Weapon>()));
+        _primaryWeapon += _defaultWeapons.Count;
+        ToggleWeapon();
     }
 
     public void AddWeapon(Weapon weapon)
@@ -35,7 +50,7 @@ public partial class WeaponManager : Weapon
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("toggle_weapon"))
+        if (@event.IsActionPressed("toggle_weapon") && _weapons.Count > 0)
         {
             ToggleWeapon();
         }
@@ -48,18 +63,5 @@ public partial class WeaponManager : Weapon
 
     public override void _Process(double delta)
     {
-        var position = GlobalPosition;
-        var mousePosition = GetGlobalMousePosition();
-        var isFarEnough = Mathf.Abs(position.X - mousePosition.X) > 15;
-
-        if (position.X > mousePosition.X && isFarEnough)
-        {
-            Position = _leftHand.Position;
-            Rotation = _leftHand.Rotation;
-        } else if (position.X < mousePosition.X && isFarEnough)
-        {
-            Position = _rightHand.Position;
-            Rotation = _rightHand.Rotation;
-        }
     }
 }

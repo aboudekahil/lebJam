@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PickableResource" load_steps=3 format=3 uid="uid://cg2x656mfabmd"]
 
 [ext_resource type="Script" path="res://pickable/PickableResource.cs" id="1_1x6gw"]
-[ext_resource type="PackedScene" uid="uid://ciqts4kgdufq1" path="res://weapons/Sword.tscn" id="1_citmv"]
+[ext_resource type="PackedScene" uid="uid://ciqts4kgdufq1" path="res://weapons/sword/Sword.tscn" id="1_citmv"]
 
 [resource]
 script = ExtResource("1_1x6gw")
