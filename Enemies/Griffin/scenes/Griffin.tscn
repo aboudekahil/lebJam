@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsroil7gex80n"]
+[gd_scene load_steps=7 format=3 uid="uid://bsroil7gex80n"]
 
 [ext_resource type="Texture2D" uid="uid://qilcsh8matp8" path="res://Enemies/Griffin/peter.png" id="1_r1ked"]
+[ext_resource type="Script" path="res://Enemies/Griffin/scripts/Griffin.cs" id="1_sj5mo"]
 [ext_resource type="PackedScene" uid="uid://dq081xtrlywt3" path="res://FSM/scenes/FSM.tscn" id="2_fh1k3"]
-[ext_resource type="Script" path="res://FSM/scripts/State.cs" id="3_4huti"]
+[ext_resource type="Script" path="res://Enemies/Griffin/scenes/GriffinEnterScene.cs" id="3_p1odn"]
+[ext_resource type="Script" path="res://Enemies/Griffin/scripts/Idle.cs" id="4_yrap3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8x5c2"]
 radius = 13.0384
 
 [node name="Griffin" type="CharacterBody2D"]
+script = ExtResource("1_sj5mo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8x5c2")
@@ -16,7 +19,12 @@ shape = SubResource("CircleShape2D_8x5c2")
 scale = Vector2(0.101563, 0.101563)
 texture = ExtResource("1_r1ked")
 
-[node name="FSM" parent="." instance=ExtResource("2_fh1k3")]
+[node name="FSM" parent="." node_paths=PackedStringArray("_defaultState") instance=ExtResource("2_fh1k3")]
+_defaultState = NodePath("EnterScene")
 
-[node name="EnterScene" type="Node2D" parent="FSM"]
-script = ExtResource("3_4huti")
+[node name="EnterScene" type="Node2D" parent="FSM" node_paths=PackedStringArray("_griffin")]
+script = ExtResource("3_p1odn")
+_griffin = NodePath("../..")
+
+[node name="Idle" type="Node2D" parent="FSM"]
+script = ExtResource("4_yrap3")

@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://tmtxkp6looiv"]
+[gd_scene load_steps=9 format=3 uid="uid://tmtxkp6looiv"]
 
 [ext_resource type="Script" path="res://main/Main.cs" id="1_6mnc7"]
 [ext_resource type="PackedScene" uid="uid://deo1jkqhex7wj" path="res://player/scenes/Player.tscn" id="2_ymq3n"]
 [ext_resource type="Texture2D" uid="uid://jmaanc02vx2l" path="res://agency_tileset.png" id="3_7y6ip"]
 [ext_resource type="PackedScene" uid="uid://skodsw152gpx" path="res://interactables/weapon pickup/scenes/WeaponPickup.tscn" id="3_wi5xl"]
 [ext_resource type="PackedScene" uid="uid://ciqts4kgdufq1" path="res://weapons/sword/Sword.tscn" id="4_3266w"]
-[ext_resource type="PackedScene" uid="uid://h03ffdh8xxwx" path="res://Enemies/scenes/Enemy.tscn" id="6_qfmou"]
+[ext_resource type="PackedScene" uid="uid://bsroil7gex80n" path="res://Enemies/Griffin/scenes/Griffin.tscn" id="6_1y4fi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ec0ju"]
 texture = ExtResource("3_7y6ip")
@@ -67,12 +67,6 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 2
 sources/1 = SubResource("TileSetAtlasSource_ec0ju")
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_2j6hs"]
-vertices = PackedVector2Array(188, -87, 190, 100, -189, 99, -184, -86, -190, -86)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-184, -96, 198, -98, 201, 111, -199, 109, -200, -96)])
-source_geometry_group_name = &"navigation_polygon_source_group"
-
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_6mnc7")
 
@@ -92,8 +86,5 @@ position = Vector2(-89, -1)
 position = Vector2(8, -6)
 _weapon = ExtResource("4_3266w")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_2j6hs")
-
-[node name="Enemy" parent="NavigationRegion2D" instance=ExtResource("6_qfmou")]
-position = Vector2(-84, 84)
+[node name="Griffin" parent="." instance=ExtResource("6_1y4fi")]
+position = Vector2(53, 147)

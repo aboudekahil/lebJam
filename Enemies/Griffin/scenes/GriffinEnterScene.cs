@@ -1,15 +1,41 @@
 using Godot;
-using System;
+using LebJam.Enemies.Griffin.scripts;
+using LebJam.FSM.scripts;
+
+namespace LebJam.Enemies.Griffin.scenes;
 
 public partial class GriffinEnterScene : State
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    private Vector2 _originalLocation;
+    [Export] private CharacterBody2D _griffin;
+    [Export] private float _flyingSpeed = 10.0f;
+    private Vector2 _direction;
+    private Vector2 _velocity;
+    
+    public override void PrepareState()
+    {
+        _originalLocation = GlobalPosition;
+        GlobalPosition = GetTree().Root.Position - new Vector2(5, 5);
+        _direction = (_originalLocation - GlobalPosition).Normalized() *
+                     _flyingSpeed;
+    }
+    
+    public override void ProcessState(double delta)
+    {
+    
+        _griffin.Velocity = _velocity;
+    
+        _griffin.MoveAndSlide();
+    
+        if (GlobalPosition == _originalLocation)
+        {
+            GetParent<FSM.scripts.FSM>().ChangeStates<Idle>();
+        }
+    }
+    
+    public override void _PhysicsProcess(double delta)
+    {
+        _velocity = GlobalPosition.Lerp(_originalLocation, (float) delta);
+        GD.Print(GlobalPosition);
+    }
 }
