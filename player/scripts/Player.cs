@@ -40,6 +40,7 @@ public partial class Player : CharacterBody2D
         {
             _isHoldingTeleport = true;
             _tpGhost.Visible = true;
+            _tpGhost.GlobalPosition = GlobalPosition+TeleportRange();
         }
         
         if (@event.IsActionReleased("teleport"))
