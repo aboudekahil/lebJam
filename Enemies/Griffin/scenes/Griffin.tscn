@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsroil7gex80n"]
+
+[ext_resource type="Texture2D" uid="uid://qilcsh8matp8" path="res://Enemies/Griffin/peter.png" id="1_r1ked"]
+[ext_resource type="PackedScene" uid="uid://dq081xtrlywt3" path="res://FSM/scenes/FSM.tscn" id="2_fh1k3"]
+[ext_resource type="Script" path="res://FSM/scripts/State.cs" id="3_4huti"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8x5c2"]
+radius = 13.0384
+
+[node name="Griffin" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8x5c2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.101563, 0.101563)
+texture = ExtResource("1_r1ked")
+
+[node name="FSM" parent="." instance=ExtResource("2_fh1k3")]
+
+[node name="EnterScene" type="Node2D" parent="FSM"]
+script = ExtResource("3_4huti")
