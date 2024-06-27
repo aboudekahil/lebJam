@@ -18,6 +18,22 @@ public partial class Player : CharacterBody2D
     private WeaponManager _weaponManager;
     private Timer _teleportationTimer;
     
+    
+    private const int ObstacleLayer = 1;
+    private bool IsTeleportationPointValid(Vector2 targetPosition)
+    {
+        var spaceState = GetWorld2D().DirectSpaceState;
+        var queryParameters = new PhysicsPointQueryParameters2D
+        {
+            Position = targetPosition,
+            CollisionMask = ObstacleLayer,
+            CollideWithBodies = true,
+            CollideWithAreas = true
+        };
+        var result = spaceState.IntersectPoint(queryParameters, maxResults: 1);
+        return result.Count == 0;
+    }
+    
     public override void _Ready()
     {
         _weaponManager = GetNode<WeaponManager>("WeaponManager");
@@ -132,7 +148,7 @@ public partial class Player : CharacterBody2D
 
     private void TeleportSpecial(Vector2 teleportVector)
     {
-        if (_teleportationTimer.TimeLeft > 0) return;
+        if (_teleportationTimer.TimeLeft > 0 || !IsTeleportationPointValid(GlobalPosition+teleportVector)) return;
         
         GlobalPosition += teleportVector;
         

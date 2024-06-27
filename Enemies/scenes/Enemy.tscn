@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://h03ffdh8xxwx"]
+[gd_scene load_steps=8 format=3 uid="uid://h03ffdh8xxwx"]
 
 [ext_resource type="Texture2D" uid="uid://cq0age0rq53b7" path="res://kenney/Tiles/tile_0109.png" id="1_r32xq"]
 [ext_resource type="Script" path="res://player/scenes/PlayerDetection.cs" id="2_o53l1"]
 [ext_resource type="Script" path="res://FSM/scripts/FSM.cs" id="3_233dl"]
 [ext_resource type="Script" path="res://Enemies/scenes/EnemyIdle.cs" id="4_e0m4n"]
+[ext_resource type="Script" path="res://Enemies/scenes/EnemyAttack.cs" id="5_fea7i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g5ma"]
 
@@ -33,9 +34,14 @@ script = ExtResource("4_e0m4n")
 _nav = NodePath("../../NavigationAgent2D")
 _enemy = NodePath("../..")
 
+[node name="Attack" type="Node2D" parent="FSM"]
+script = ExtResource("5_fea7i")
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.694734, 0.000388415, 0.700191, 1)
 debug_path_custom_line_width = 0.65
+
+[node name="State Machine" type="Node2D" parent="."]
