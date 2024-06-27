@@ -13,6 +13,18 @@ public partial class GriffinEnterScene : State
     [Export] private CharacterBody2D _griffin;
     private Vector2 _originalLocation;
     private Vector2 _velocity;
+    
+    public Vector2 GetCameraTopLeft()
+    {
+        var viewport = GetViewportRect();
+        var viewportSize = viewport.Size;
+        var cameraTransform = _camera.GlobalTransform;
+
+        var offset = (viewportSize / 2) * -_camera.Offset;
+        var topLeft = _camera.GlobalPosition + offset;
+
+        return topLeft;
+    }
 
     public override void PrepareState()
     {
@@ -26,7 +38,7 @@ public partial class GriffinEnterScene : State
 
         Rect2 a = GetViewportRect() * GetCanvasTransform(); 
         _griffin.GlobalPosition =
-            a.Position* (1/_camera.Zoom.X) + new Vector2(5, 5);
+            GetCameraTopLeft() + new Vector2(-5, -5);
         
         GD.Print(_griffin.GlobalPosition);
 
