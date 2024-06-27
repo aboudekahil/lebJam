@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bp1upi3ibq8lf"]
+[gd_scene load_steps=17 format=3 uid="uid://bp1upi3ibq8lf"]
 
 [ext_resource type="Script" path="res://main/Main.cs" id="1_lqeai"]
 [ext_resource type="Texture2D" uid="uid://beoq6ldoqlpkw" path="res://building.png" id="3_1gwy4"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cr76wtbaadwge" path="res://long.png" id="10_giim7"]
 [ext_resource type="Texture2D" uid="uid://dlbrseyuicufv" path="res://very closed fence.png" id="11_m78uq"]
 [ext_resource type="Texture2D" uid="uid://dw35t8frg54dk" path="res://semi open right.png" id="12_1shom"]
+[ext_resource type="PackedScene" uid="uid://h03ffdh8xxwx" path="res://Enemies/scenes/Enemy.tscn" id="12_2jkih"]
 [ext_resource type="Texture2D" uid="uid://cjvaaluhkli1r" path="res://trash.png" id="13_ijgnp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lyh6m"]
@@ -184,6 +185,12 @@ physics_layer_0/collision_mask = 2
 sources/6 = SubResource("TileSetAtlasSource_lyh6m")
 sources/9 = SubResource("TileSetAtlasSource_su877")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_b3wra"]
+vertices = PackedVector2Array(371, 80, -276, 77, -270, -327, 371, -329)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-280, -337, -287, 87, 381, 91, 382, -340)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_lqeai")
 
@@ -283,3 +290,9 @@ texture = ExtResource("7_mnmmw")
 z_index = -4
 y_sort_enabled = true
 position = Vector2(25, 11)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-50, 84)
+navigation_polygon = SubResource("NavigationPolygon_b3wra")
+
+[node name="Enemy" parent="NavigationRegion2D" instance=ExtResource("12_2jkih")]
