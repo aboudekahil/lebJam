@@ -14,7 +14,7 @@ public partial class Player : CharacterBody2D
     private float _baseRotation;
     private float _rotation;
     private bool _isHoldingTeleport;
-    
+    private Sprite2D _tpGhost;
     private WeaponManager _weaponManager;
     private Timer _teleportationTimer;
     
@@ -25,6 +25,7 @@ public partial class Player : CharacterBody2D
         
         _baseRotation = RotationDegrees;
         _rotation = _baseRotation;
+        _tpGhost =GetNode<Sprite2D>("%TeleportGhost");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -38,20 +39,18 @@ public partial class Player : CharacterBody2D
         if (@event.IsActionPressed("teleport"))
         {
             _isHoldingTeleport = true;
-            QueueRedraw();
+            _tpGhost.Visible = true;
         }
         
         if (@event.IsActionReleased("teleport"))
         {
-            TeleportSpecial();
+            _tpGhost.Visible = false;
+            TeleportSpecial(TeleportRange());
             _isHoldingTeleport = false;
-            QueueRedraw();
         }
 
-        if (@event is InputEventMouseMotion && _isHoldingTeleport)
-        {
-            QueueRedraw();
-        }
+        if (@event is not InputEventMouseMotion || !_isHoldingTeleport) return;
+        _tpGhost.GlobalPosition = GlobalPosition+TeleportRange();
     }
 
     public override void _Draw()
@@ -69,9 +68,8 @@ public partial class Player : CharacterBody2D
             DrawCircle(Transform.Y, _teleportRange, Color.Color8(255, 0, 0, 128));
             return;
         }
-        
+
         DrawCircle(Transform.Y, _teleportRange, Color.Color8(0, 255, 0, 128));
-        
     }
 
     private void MovePlayer(double delta)
@@ -131,22 +129,27 @@ public partial class Player : CharacterBody2D
         _weaponManager.AddWeapon(weapon);
     }
 
-    private void TeleportSpecial()
+    private void TeleportSpecial(Vector2 teleportVector)
     {
         if (_teleportationTimer.TimeLeft > 0) return;
         
+        GlobalPosition += teleportVector;
+        
+        _teleportationTimer.Start();
+    }
+
+    private Vector2 TeleportRange()
+    {
         var mousePosition = GetGlobalMousePosition();
         
         var teleportVector = mousePosition - GlobalPosition;
         
         if (teleportVector.Length() > _teleportRange)
         {
-            // teleportVector = teleportVector.Normalized() * _teleportRange;
-            return;
+            teleportVector = teleportVector.Normalized() * _teleportRange;
+            
         }
         
-        GlobalPosition += teleportVector;
-        
-        _teleportationTimer.Start();
+        return teleportVector;
     }
 }
