@@ -20,7 +20,7 @@ public partial class EnemyIdle : State
     {
         _nav.TargetPosition = _player.GlobalPosition;
 
-        var direction = _nav.GetNextPathPosition() - _enemy.Position;
+        var direction = _nav.GetNextPathPosition() - _enemy.GlobalPosition;
         direction = direction.Normalized();
 
         _enemy.Velocity = _enemy.Velocity.Lerp(direction * _speed, (float)
