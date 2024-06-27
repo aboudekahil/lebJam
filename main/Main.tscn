@@ -287,4 +287,4 @@ position = Vector2(25, 11)
 collision_layer = 2
 
 [node name="Griffin" parent="." instance=ExtResource("13_jvp38")]
-position = Vector2(60, 18)
+position = Vector2(93, -3)

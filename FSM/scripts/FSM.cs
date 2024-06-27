@@ -1,15 +1,15 @@
 using System;
-using Godot;
 using System.Collections.Generic;
+using Godot;
 
 namespace LebJam.FSM.scripts;
 
 [GlobalClass]
 public partial class FSM : Node
 {
-    private Dictionary<Type, State> _states;
     private State _currentState;
-    [Export] private State _defaultState; 
+    [Export] private State _defaultState;
+    private Dictionary<Type, State> _states;
 
     public override void _Ready()
     {
@@ -24,7 +24,7 @@ public partial class FSM : Node
             {
                 throw new ArgumentException("Illegal Child in FSM");
             }
-            
+
             _states.Add(s.GetType(), s);
             s.PrepareState();
             s.ResetState();
@@ -42,7 +42,7 @@ public partial class FSM : Node
         if (state is null)
         {
             return;
-        } 
+        }
 
         _currentState.ResetState();
         _currentState = state;
@@ -62,5 +62,4 @@ public partial class FSM : Node
     {
         _currentState.PhysicsProcessState(delta);
     }
-    
 }

@@ -8,8 +8,8 @@ namespace LebJam.weapons;
 
 public partial class WeaponManager : Weapon
 {
-    [Export] private Array<PackedScene> _defaultWeapons = new();
     private readonly List<Weapon> _weapons = new();
+    [Export] private Array<PackedScene> _defaultWeapons = new();
     private Marker2D _leftHand;
     private int _primaryWeapon = -1;
     private Marker2D _rightHand;

@@ -7,19 +7,19 @@ namespace LebJam.player.scripts;
 
 public partial class Player : CharacterBody2D
 {
-    [Export] private float _teleportRange = 40.0f;
-    
     private const float NormalSpeed = 85.0f;
     private const float RunningSpeedBoost = 100.0f;
+
+
+    private const int ObstacleLayer = 1;
     private float _baseRotation;
-    private float _rotation;
     private bool _isHoldingTeleport;
+    private float _rotation;
+    private Timer _teleportationTimer;
+    [Export] private float _teleportRange = 40.0f;
     private Sprite2D _tpGhost;
     private WeaponManager _weaponManager;
-    private Timer _teleportationTimer;
-    
-    
-    private const int ObstacleLayer = 1;
+
     private bool IsTeleportationPointValid(Vector2 targetPosition)
     {
         var spaceState = GetWorld2D().DirectSpaceState;
@@ -30,18 +30,18 @@ public partial class Player : CharacterBody2D
             CollideWithBodies = true,
             CollideWithAreas = true
         };
-        var result = spaceState.IntersectPoint(queryParameters, maxResults: 1);
+        var result = spaceState.IntersectPoint(queryParameters, 1);
         return result.Count == 0;
     }
-    
+
     public override void _Ready()
     {
         _weaponManager = GetNode<WeaponManager>("WeaponManager");
         _teleportationTimer = GetNode<Timer>("%TeleportationTimer");
-        
+
         _baseRotation = RotationDegrees;
         _rotation = _baseRotation;
-        _tpGhost =GetNode<Sprite2D>("%TeleportGhost");
+        _tpGhost = GetNode<Sprite2D>("%TeleportGhost");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -56,9 +56,9 @@ public partial class Player : CharacterBody2D
         {
             _isHoldingTeleport = true;
             _tpGhost.Visible = true;
-            _tpGhost.GlobalPosition = GlobalPosition+TeleportRange();
+            _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
         }
-        
+
         if (@event.IsActionReleased("teleport"))
         {
             _tpGhost.Visible = false;
@@ -66,8 +66,12 @@ public partial class Player : CharacterBody2D
             _isHoldingTeleport = false;
         }
 
-        if (@event is not InputEventMouseMotion || !_isHoldingTeleport) return;
-        _tpGhost.GlobalPosition = GlobalPosition+TeleportRange();
+        if (@event is not InputEventMouseMotion || !_isHoldingTeleport)
+        {
+            return;
+        }
+
+        _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
     }
 
     public override void _Draw()
@@ -78,11 +82,13 @@ public partial class Player : CharacterBody2D
         }
 
         var mousePosition = GetGlobalMousePosition();
-        
+
         var teleportVector = mousePosition - GlobalPosition;
-        if (teleportVector.Length() > _teleportRange || _teleportationTimer.TimeLeft > 0)
+        if (teleportVector.Length() > _teleportRange ||
+            _teleportationTimer.TimeLeft > 0)
         {
-            DrawCircle(Transform.Y, _teleportRange, Color.Color8(255, 0, 0, 128));
+            DrawCircle(Transform.Y, _teleportRange,
+                Color.Color8(255, 0, 0, 128));
             return;
         }
 
@@ -148,25 +154,28 @@ public partial class Player : CharacterBody2D
 
     private void TeleportSpecial(Vector2 teleportVector)
     {
-        if (_teleportationTimer.TimeLeft > 0 || !IsTeleportationPointValid(GlobalPosition+teleportVector)) return;
-        
+        if (_teleportationTimer.TimeLeft > 0 ||
+            !IsTeleportationPointValid(GlobalPosition + teleportVector))
+        {
+            return;
+        }
+
         GlobalPosition += teleportVector;
-        
+
         _teleportationTimer.Start();
     }
 
     private Vector2 TeleportRange()
     {
         var mousePosition = GetGlobalMousePosition();
-        
+
         var teleportVector = mousePosition - GlobalPosition;
-        
+
         if (teleportVector.Length() > _teleportRange)
         {
             teleportVector = teleportVector.Normalized() * _teleportRange;
-            
         }
-        
+
         return teleportVector;
     }
 }

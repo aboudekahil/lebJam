@@ -6,10 +6,10 @@ namespace LebJam.Enemies.scenes;
 
 public partial class EnemyIdle : State
 {
-    [Export] private NavigationAgent2D _nav;
     [Export] private CharacterBody2D _enemy;
-    [Export] private float _speed = 20.0f;
+    [Export] private NavigationAgent2D _nav;
     private Player _player;
+    [Export] private float _speed = 20.0f;
 
     public override void PrepareState()
     {
@@ -25,7 +25,7 @@ public partial class EnemyIdle : State
 
         _enemy.Velocity = _enemy.Velocity.Lerp(direction * _speed, (float)
             (7 * delta));
-        
+
 
         _enemy.MoveAndSlide();
     }

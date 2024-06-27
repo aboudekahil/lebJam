@@ -96,7 +96,7 @@ position = Vector2(9, 5)
 unique_name_in_owner = true
 position = Vector2(-9, 5)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
