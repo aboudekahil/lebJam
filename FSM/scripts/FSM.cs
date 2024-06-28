@@ -26,8 +26,8 @@ public partial class FSM : Node
             }
 
             _states.Add(s.GetType(), s);
-            s.PrepareState();
             s.ResetState();
+            s.PrepareState();
         }
     }
 

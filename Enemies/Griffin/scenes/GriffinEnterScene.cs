@@ -9,25 +9,14 @@ public partial class GriffinEnterScene : State
 {
     private Camera2D _camera;
     private Vector2 _direction;
-    [Export] private float _flyingSpeed = 10.0f;
+    [Export] private float _flyingSpeed = 100.0f;
     [Export] private CharacterBody2D _griffin;
     private Vector2 _originalLocation;
     private Vector2 _velocity;
-    
-    public Vector2 GetCameraTopLeft()
-    {
-        var viewport = GetViewportRect();
-        var viewportSize = viewport.Size;
-        var cameraTransform = _camera.GlobalTransform;
-
-        var offset = (viewportSize / 2) * -_camera.Offset;
-        var topLeft = _camera.GlobalPosition + offset;
-
-        return topLeft;
-    }
 
     public override void PrepareState()
     {
+        _griffin.CollisionMask = 4;
         _camera = GetTree().GetFirstNodeInGroup("camera") as Camera2D;
         _originalLocation = _griffin.GlobalPosition;
         if (_camera == null)
@@ -36,30 +25,40 @@ public partial class GriffinEnterScene : State
             return;
         }
 
-        Rect2 a = GetViewportRect() * GetCanvasTransform(); 
         _griffin.GlobalPosition =
-            GetCameraTopLeft() + new Vector2(-5, -5);
-        
-        GD.Print(_griffin.GlobalPosition);
+            _camera.GlobalPosition +
+            (GetViewportRect() * GetCanvasTransform()).Position *
+            (1 / _camera.Zoom.X) * 0.5f + new Vector2(5, 5);
 
-        _direction = (_originalLocation - _griffin.GlobalPosition).Normalized() *
-                     _flyingSpeed;
+        _direction =
+            (_originalLocation - _griffin.GlobalPosition).Normalized() *
+            _flyingSpeed;
     }
 
     public override void ProcessState(double delta)
     {
-        _griffin.Velocity = _velocity;
+        _direction =
+            (_originalLocation - _griffin.GlobalPosition).Normalized() *
+            _flyingSpeed;
+        _griffin.Velocity = _griffin.Velocity.Lerp(_direction, (float)delta);
 
         _griffin.MoveAndSlide();
 
-        if (GlobalPosition == _originalLocation)
+        var distanceFromOrgin =
+            (_griffin.GlobalPosition - _originalLocation).Length();
+        if (distanceFromOrgin < 1)
         {
             GetParent<FSM.scripts.FSM>().ChangeStates<Idle>();
         }
+
+        if(distanceFromOrgin < 100)
+        {
+            _flyingSpeed = (float)Mathf.Lerp(_flyingSpeed, 0, delta* 10);
+        }
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void ResetState()
     {
-        _velocity = GlobalPosition.Lerp(_originalLocation, (float)delta);
+        // _griffin.CollisionMask = 1;
     }
 }
