@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkolrovoio3nm"]
+
+[ext_resource type="Script" path="res://Enemies/scripts/EnemyHealthManager.cs" id="1_uyoyk"]
+
+[node name="EnemyHealthManager" type="Node"]
+script = ExtResource("1_uyoyk")

@@ -3,12 +3,6 @@ using Godot;
 
 namespace LebJam.Enemies.Griffin.scripts;
 
-public enum GriffinFlyingStates
-{
-    Flying,
-    Walking
-}
-
 public partial class GriffinEnemy : CharacterBody2D
 {
     public void SetGriffinFlyingState(GriffinFlyingStates state)
@@ -22,3 +16,10 @@ public partial class GriffinEnemy : CharacterBody2D
         };
     }
 }
+
+public enum GriffinFlyingStates
+{
+    Flying,
+    Walking
+}
+

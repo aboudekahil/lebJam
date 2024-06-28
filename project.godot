@@ -105,6 +105,9 @@ teleport={
 2d_render/layer_1="buil"
 2d_physics/layer_1="world"
 2d_physics/layer_2="player"
+2d_physics/layer_3="enemy"
+2d_physics/layer_4="player_attacks"
+2d_physics/layer_32="passthrough"
 
 [rendering]
 

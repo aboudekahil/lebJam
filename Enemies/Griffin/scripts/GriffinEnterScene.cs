@@ -1,30 +1,31 @@
-using System;
-using System.Diagnostics;
 using Godot;
-using LebJam.Enemies.Griffin.scripts;
 using LebJam.FSM.scripts;
+using LebJam.player.scripts;
 
-namespace LebJam.Enemies.Griffin.scenes;
+namespace LebJam.Enemies.Griffin.scripts;
 
 public partial class GriffinEnterScene : State
 {
-    private Camera2D _camera;
+    private PlayerCam _camera;
     private Vector2 _direction;
     [Export] private float _flyingSpeed = 100.0f;
     [Export] private GriffinEnemy _griffinEnemy;
     private Vector2 _originalLocation;
     private Vector2 _velocity;
 
+    public override void _Ready()
+    {
+        _camera = (PlayerCam) GetTree().GetFirstNodeInGroup("camera");
+    }
+
     public override void PrepareState()
     {
         _griffinEnemy.SetGriffinFlyingState(GriffinFlyingStates.Flying);
-        _camera = (Camera2D) GetTree().GetFirstNodeInGroup("camera");
         _originalLocation = _griffinEnemy.GlobalPosition;
 
         _griffinEnemy.GlobalPosition =
-            _camera.GlobalPosition +
-            (GetViewportRect() * GetCanvasTransform()).Position *
-            (1 / _camera.Zoom.X) * 0.5f + new Vector2(5, 5);
+            _camera.GlobalPosition + _camera.GetTopRightViewCorner()
+             + new Vector2(5, 5);
 
         _direction =
             (_originalLocation - _griffinEnemy.GlobalPosition).Normalized() *
@@ -40,14 +41,14 @@ public partial class GriffinEnterScene : State
 
         _griffinEnemy.MoveAndSlide();
 
-        var distanceFromOrgin =
+        var distanceFromOrigin =
             (_griffinEnemy.GlobalPosition - _originalLocation).Length();
-        if (distanceFromOrgin < 1)
+        if (distanceFromOrigin < 1)
         {
             GetParent<FSM.scripts.FSM>().ChangeStates<Idle>();
         }
 
-        if(distanceFromOrgin < 100)
+        if(distanceFromOrigin < 100)
         {
             _flyingSpeed = (float)Mathf.Lerp(_flyingSpeed, 0, delta* 10);
         }

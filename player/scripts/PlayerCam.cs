@@ -34,4 +34,9 @@ public partial class PlayerCam : Camera2D
                 _centerPos.DistanceTo(GetLocalMousePosition()) / 2;
         }
     }
+
+    public Vector2 GetTopRightViewCorner()
+    {
+        return (GetViewportRect() * GetCanvasTransform()).Position * (1 / Zoom.X) * 0.5f;
+    }
 }
