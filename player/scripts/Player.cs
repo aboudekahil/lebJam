@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using LebJam.scripts;
 using WeaponManager = LebJam.weapons.WeaponManager;
@@ -11,7 +12,6 @@ public partial class Player : CharacterBody2D
     private const float RunningSpeedBoost = 100.0f;
 
 
-    private const int ObstacleLayer = 1;
     private float _baseRotation;
     private bool _isHoldingTeleport;
     private float _rotation;
@@ -26,7 +26,7 @@ public partial class Player : CharacterBody2D
         var queryParameters = new PhysicsPointQueryParameters2D
         {
             Position = targetPosition,
-            CollisionMask = ObstacleLayer,
+            CollisionMask = (uint)CollisionLayers.Ground,
             CollideWithBodies = true,
             CollideWithAreas = true
         };
@@ -57,42 +57,34 @@ public partial class Player : CharacterBody2D
             _isHoldingTeleport = true;
             _tpGhost.Visible = true;
             _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
-        }
-
-        if (@event.IsActionReleased("teleport"))
+        } 
+        else if (@event.IsActionReleased("teleport"))
         {
             _tpGhost.Visible = false;
             TeleportSpecial(TeleportRange());
             _isHoldingTeleport = false;
-        }
-
-        if (@event is not InputEventMouseMotion || !_isHoldingTeleport)
+        } 
+        else if (@event is InputEventMouseButton mouseButton)
         {
-            return;
+            var a = GetWorld2D().DirectSpaceState.IntersectPoint(
+                new PhysicsPointQueryParameters2D
+                {
+                    Position = mouseButton.GlobalPosition,
+                    CollisionMask = (uint)CollisionLayers.Enemy,
+                    CollideWithAreas = true,
+                    CollideWithBodies = true
+                }, 1);
+
+            if(a.Count > 0)
+            {
+                GD.Print(a[0].GetValueOrDefault("collider"));
+            }
         }
-
-        _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
-    }
-
-    public override void _Draw()
-    {
-        if (!_isHoldingTeleport)
+        else if (@event is not InputEventMouseMotion || !_isHoldingTeleport)
         {
-            return;
+            _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
         }
 
-        var mousePosition = GetGlobalMousePosition();
-
-        var teleportVector = mousePosition - GlobalPosition;
-        if (teleportVector.Length() > _teleportRange ||
-            _teleportationTimer.TimeLeft > 0)
-        {
-            DrawCircle(Transform.Y, _teleportRange,
-                Color.Color8(255, 0, 0, 128));
-            return;
-        }
-
-        DrawCircle(Transform.Y, _teleportRange, Color.Color8(0, 255, 0, 128));
     }
 
     private void MovePlayer(double delta)

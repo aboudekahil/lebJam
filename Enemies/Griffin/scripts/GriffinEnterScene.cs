@@ -15,7 +15,7 @@ public partial class GriffinEnterScene : State
 
     public override void _Ready()
     {
-        _camera = (PlayerCam) GetTree().GetFirstNodeInGroup("camera");
+        _camera = (PlayerCam)GetTree().GetFirstNodeInGroup("camera");
     }
 
     public override void PrepareState()
@@ -25,7 +25,7 @@ public partial class GriffinEnterScene : State
 
         _griffinEnemy.GlobalPosition =
             _camera.GlobalPosition + _camera.GetTopRightViewCorner()
-             + new Vector2(5, 5);
+                                   + new Vector2(5, 5);
 
         _direction =
             (_originalLocation - _griffinEnemy.GlobalPosition).Normalized() *
@@ -37,7 +37,8 @@ public partial class GriffinEnterScene : State
         _direction =
             (_originalLocation - _griffinEnemy.GlobalPosition).Normalized() *
             _flyingSpeed;
-        _griffinEnemy.Velocity = _griffinEnemy.Velocity.Lerp(_direction, (float)delta);
+        _griffinEnemy.Velocity =
+            _griffinEnemy.Velocity.Lerp(_direction, (float)delta);
 
         _griffinEnemy.MoveAndSlide();
 
@@ -48,14 +49,15 @@ public partial class GriffinEnterScene : State
             GetParent<FSM.scripts.FSM>().ChangeStates<Idle>();
         }
 
-        if(distanceFromOrigin < 100)
+        if (distanceFromOrigin < 100)
         {
-            _flyingSpeed = (float)Mathf.Lerp(_flyingSpeed, 0, delta* 10);
+            _flyingSpeed = (float)Mathf.Lerp(_flyingSpeed, 0, delta * 10);
         }
     }
 
     public override void ResetState()
     {
         _griffinEnemy.SetGriffinFlyingState(GriffinFlyingStates.Walking);
+        GD.Print("hittable");
     }
 }

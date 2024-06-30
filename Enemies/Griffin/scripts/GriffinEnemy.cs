@@ -9,8 +9,8 @@ public partial class GriffinEnemy : CharacterBody2D
     {
         CollisionMask = state switch
         {
-            GriffinFlyingStates.Flying => 4,
-            GriffinFlyingStates.Walking => 1,
+            GriffinFlyingStates.Flying => (uint) CollisionLayers.PassThrough,
+            GriffinFlyingStates.Walking => (uint) CollisionLayers.Ground,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state,
                 null)
         };
@@ -22,4 +22,3 @@ public enum GriffinFlyingStates
     Flying,
     Walking
 }
-

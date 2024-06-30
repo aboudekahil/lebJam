@@ -37,6 +37,7 @@ public partial class PlayerCam : Camera2D
 
     public Vector2 GetTopRightViewCorner()
     {
-        return (GetViewportRect() * GetCanvasTransform()).Position * (1 / Zoom.X) * 0.5f;
+        return (GetViewportRect() * GetCanvasTransform()).Position *
+               (1 / Zoom.X) * 0.5f;
     }
 }

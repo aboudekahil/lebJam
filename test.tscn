@@ -83,7 +83,7 @@ layer_1/tile_data = PackedInt32Array(-458752, 262145, 7, -393218, 65537, 7, -393
 position = Vector2(-89, -1)
 
 [node name="WeaponPickup" parent="." instance=ExtResource("3_wi5xl")]
-position = Vector2(8, -6)
+position = Vector2(8, 128)
 _weapon = ExtResource("4_3266w")
 
 [node name="Griffin" parent="." instance=ExtResource("6_1y4fi")]
