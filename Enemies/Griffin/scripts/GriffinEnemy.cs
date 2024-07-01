@@ -5,15 +5,28 @@ namespace LebJam.Enemies.Griffin.scripts;
 
 public partial class GriffinEnemy : CharacterBody2D
 {
+    private Area2D _hitBox;
+
+    public override void _EnterTree()
+    {
+        _hitBox = GetNode<Area2D>("%Hitbox");
+    }
+
     public void SetGriffinFlyingState(GriffinFlyingStates state)
     {
-        CollisionMask = state switch
+        switch (state)
         {
-            GriffinFlyingStates.Flying => (uint) CollisionLayers.PassThrough,
-            GriffinFlyingStates.Walking => (uint) CollisionLayers.Ground,
-            _ => throw new ArgumentOutOfRangeException(nameof(state), state,
-                null)
-        };
+            case GriffinFlyingStates.Flying:
+                CollisionMask = (uint)CollisionLayers.PassThrough;
+                _hitBox.CollisionMask = (uint)CollisionLayers.PassThrough;
+                break;
+
+            case GriffinFlyingStates.Walking:
+                CollisionMask = (uint)CollisionLayers.Player;
+                _hitBox.CollisionMask = (uint)CollisionLayers.Player;
+                break;
+        }
+
     }
 }
 

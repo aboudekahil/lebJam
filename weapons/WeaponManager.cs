@@ -13,6 +13,7 @@ public partial class WeaponManager : Weapon
     private Marker2D _leftHand;
     private int _primaryWeapon = -1;
     private Marker2D _rightHand;
+    public uint CurrentDamage => 20;
 
     public override void _Ready()
     {

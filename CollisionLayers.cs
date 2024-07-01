@@ -4,7 +4,7 @@ public enum CollisionLayers : uint
 {
     Ground = 1,
     Player = 2,
-    Enemy = 3,
-    PlayerAttacks = 4,
+    Enemy = 4,
+    PlayerAttacks = 8,
     PassThrough = 32
 }

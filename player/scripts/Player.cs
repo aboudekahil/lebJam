@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 using LebJam.scripts;
 using WeaponManager = LebJam.weapons.WeaponManager;
@@ -19,6 +18,8 @@ public partial class Player : CharacterBody2D
     [Export] private float _teleportRange = 40.0f;
     private Sprite2D _tpGhost;
     private WeaponManager _weaponManager;
+
+    public uint Damage => _weaponManager.CurrentDamage;
 
     private bool IsTeleportationPointValid(Vector2 targetPosition)
     {
@@ -57,34 +58,19 @@ public partial class Player : CharacterBody2D
             _isHoldingTeleport = true;
             _tpGhost.Visible = true;
             _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
-        } 
-        else if (@event.IsActionReleased("teleport"))
+        }
+
+        if (@event.IsActionReleased("teleport"))
         {
             _tpGhost.Visible = false;
             TeleportSpecial(TeleportRange());
             _isHoldingTeleport = false;
-        } 
-        else if (@event is InputEventMouseButton mouseButton)
-        {
-            var a = GetWorld2D().DirectSpaceState.IntersectPoint(
-                new PhysicsPointQueryParameters2D
-                {
-                    Position = mouseButton.GlobalPosition,
-                    CollisionMask = (uint)CollisionLayers.Enemy,
-                    CollideWithAreas = true,
-                    CollideWithBodies = true
-                }, 1);
-
-            if(a.Count > 0)
-            {
-                GD.Print(a[0].GetValueOrDefault("collider"));
-            }
         }
-        else if (@event is not InputEventMouseMotion || !_isHoldingTeleport)
+
+        if (@event is InputEventMouseMotion && _isHoldingTeleport)
         {
             _tpGhost.GlobalPosition = GlobalPosition + TeleportRange();
         }
-
     }
 
     private void MovePlayer(double delta)

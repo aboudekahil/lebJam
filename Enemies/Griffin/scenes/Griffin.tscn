@@ -30,10 +30,14 @@ _griffinEnemy = NodePath("../..")
 script = ExtResource("4_yrap3")
 
 [node name="EnemyHealthManager" parent="." node_paths=PackedStringArray("_enemy", "_hitBox") instance=ExtResource("6_8d8bd")]
+unique_name_in_owner = true
 _enemy = NodePath("..")
 _hitBox = NodePath("../Hitbox")
 
 [node name="Hitbox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PackedVector2Array(-11, -3, -13, 10, -12, 13, 13, 13, 13, -8, 4, -11, -1, -11, -7, -10)

@@ -6,10 +6,10 @@ namespace LebJam.Enemies.Griffin.scripts;
 
 public partial class GriffinEnterScene : State
 {
-    private PlayerCam _camera;
-    private Vector2 _direction;
     [Export] private float _flyingSpeed = 100.0f;
     [Export] private GriffinEnemy _griffinEnemy;
+    private PlayerCam _camera;
+    private Vector2 _direction;
     private Vector2 _originalLocation;
     private Vector2 _velocity;
 
@@ -58,6 +58,5 @@ public partial class GriffinEnterScene : State
     public override void ResetState()
     {
         _griffinEnemy.SetGriffinFlyingState(GriffinFlyingStates.Walking);
-        GD.Print("hittable");
     }
 }
